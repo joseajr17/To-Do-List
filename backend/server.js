@@ -17,4 +17,10 @@ app.post('/tasks', async (req, res) => {
     res.json(task);
 })
 
+// Listar tasks
+app.get('/task', async (req, res) => {
+    let tasks = await prisma.task.findMany();
+    res.json(tasks);
+});
+
 app.listen(5000, () => console.log("Server rodando"));
