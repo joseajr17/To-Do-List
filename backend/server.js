@@ -36,4 +36,14 @@ app.patch('/task:id', async (req, res) => {
     res.json(task);
 });
 
+// Deletar Task
+app.delete('/task/:id', async (req, res) => {
+    await prisma.task.delete({
+        where: {
+            id: req.params.id
+        },
+    });
+    res.json({message: 'Task deletada com sucesso!'});
+});
+
 app.listen(5000, () => console.log("Server rodando"));
