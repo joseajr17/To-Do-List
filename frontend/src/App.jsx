@@ -1,9 +1,10 @@
+import { Task } from './components/Task';
 
 function App() {
 
   return (
-    <div>
-      <h1 className="bg-red-500">Olá</h1>
+    <div className='flex flex-col p-4 dark:bg-gray-800 font-mono text-white'>
+      <Task />
     </div>
   )
 }
