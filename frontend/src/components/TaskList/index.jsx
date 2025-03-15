@@ -10,7 +10,27 @@ export function TaskList() {
     async function getTasks() {
         const tasksAPI = await api.get('/tasks');
         setTasks(tasksAPI.data);
+
     }
+
+    // Update Completed Task
+    async function onToggle(id) {
+        try {
+            const tasksAPI = await api.patch(`/tasks/${id}`, {
+                completed: !tasks.find(task => task.id === id).completed
+            });
+
+            console.log(tasksAPI);
+
+            setTasks(prevTasks =>
+                prevTasks.map(task =>
+                    task.id === id ? tasksAPI.data : task
+                )
+            );
+        } catch (e) { 
+            console.error("Erro ao atualizar a tarefa:", e);
+        }
+    };
 
     useEffect(() => {
         getTasks();
@@ -21,7 +41,7 @@ export function TaskList() {
         <div className="flex flex-col m-2 text-white pt-4">
             <TaskForm />
             {tasks.map(task => (
-                <Task task={task} key={task.id} />
+                <Task task={task} key={task.id} onToggle={onToggle} />
             ))}
         </div>
     );

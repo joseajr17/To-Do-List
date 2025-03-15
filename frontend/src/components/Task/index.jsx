@@ -1,6 +1,6 @@
 import trash from '../../assets/trash.png';
 
-export function Task({ task }) {
+export function Task({ task, onToggle }) {
 
     if (!task) {
         return (
@@ -11,8 +11,8 @@ export function Task({ task }) {
         return (
             <div className="flex items-center justify-between bg-gray-700 p-3 m-1 rounded-lg ring ring-gray-900/5" >
                 <div className="flex gap-2">
-                    <input type="checkbox" ></input>
-                    <span className={task.completed ? "line-through" : ""}> {task.text} </span>
+                    <input type="checkbox" checked={ task.completed } onChange={() => onToggle(task.id)}></input>
+                    <span className={task.completed ? "line-through" : ""}> {task.text}, {task.id} </span>
                 </div>
                 <button className="bg-red-500 text-white rounded hover:bg-red-700 cursor-pointer">
                     <img src={trash} alt="+" className="w-6 h-6 m-1"></img>
