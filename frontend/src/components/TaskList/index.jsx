@@ -35,11 +35,12 @@ export function TaskList() {
 
 
     return (
-        <div className="flex flex-col m-2 text-white pt-4">
-            <TaskForm getTasks={getTasks} />
+        <div className="flex flex-col m-2 text-white p-4">
+            
             {tasks.map(task => (
                 <Task task={task} key={task.id} onToggle={onToggle} getTasks={getTasks} />
             ))}
+            <TaskForm getTasks={getTasks} />
         </div>
     );
 }
