@@ -7,10 +7,10 @@ export function TaskList() {
 
     const [tasks, setTasks] = useState([]);
 
+    
     async function getTasks() {
         const tasksAPI = await api.get('/tasks');
         setTasks(tasksAPI.data);
-
     }
 
     // Update Completed Task
@@ -19,9 +19,6 @@ export function TaskList() {
             const tasksAPI = await api.patch(`/tasks/${id}`, {
                 completed: !tasks.find(task => task.id === id).completed
             });
-
-            console.log(tasksAPI);
-
             setTasks(prevTasks =>
                 prevTasks.map(task =>
                     task.id === id ? tasksAPI.data : task
@@ -39,7 +36,7 @@ export function TaskList() {
 
     return (
         <div className="flex flex-col m-2 text-white pt-4">
-            <TaskForm />
+            <TaskForm getTasks={getTasks} />
             {tasks.map(task => (
                 <Task task={task} key={task.id} onToggle={onToggle} />
             ))}
