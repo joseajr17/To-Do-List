@@ -1,12 +1,12 @@
 const express = require('express');
-const { PrismaClient } = require('@prisma/client');
+const { prisma } = require('./utils/prisma');
+const { UserController } = require('./controller/UserController');
 
-const prisma = new PrismaClient();
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-    return res.json({hello: "world"});
-});
+const userController = new UserController;
+
+router.post('/users', userController.store);
 
 // Criar task
 router.post('/tasks', async (req, res) => {
