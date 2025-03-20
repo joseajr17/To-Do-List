@@ -1,77 +1,30 @@
 const express = require('express');
 const { prisma } = require('./utils/prisma');
 const { UserController } = require('./controller/UserController');
+const { TaskController } = require('./controller/TaskController');
 
 const router = express.Router();
 
+// Controllers
 const userController = new UserController;
+const taskController = new TaskController;
+
+// Rotas Users
 
 router.post('/users', userController.store);
 
-// Criar task
-router.post('/tasks', async (req, res) => {
-    try {
-        const task = await prisma.task.create({
-            data: {
-                text: req.body.text,
-            },
-        });
-        res.status(201).json(task);
-    } catch (error) {
-        res.status(500).json({ error: "Erro ao criar tarefa" });
-    }
-});
+// Rotas Tasks
+
+// Criar Task
+router.post('/tasks', taskController.createTask);
 
 // Listar tasks
-router.get('/tasks', async (req, res) => {
-    try {
-        const tasks = await prisma.task.findMany();
-        res.status(200).json(tasks);
-    } catch (error) {
-        res.status(500).json({ error: "Erro ao listar tarefas" });
-    }
-});
+router.get('/tasks', taskController.getTasks);
 
 // Atualizar o estado da tarefa
-router.patch('/tasks/:id', async (req, res) => {
-    try {
-        const task = await prisma.task.findUnique({
-            where: {
-                id: req.params.id
-            }
-        });
-
-        if (!task) {
-            return res.status(404).json({ error: "Tarefa não encontrada" });
-        }
-
-        const updatedTask = await prisma.task.update({
-            where: {
-                id: req.params.id
-            },
-            data: {
-                completed: !task.completed
-            },
-        });
-
-        res.json(updatedTask);
-    } catch (error) {
-        res.status(500).json({ error: "Erro ao atualizar a tarefa" });
-    }
-});
+router.patch('/tasks/:id', taskController.updateTask);
 
 // Deletar Task
-router.delete('/tasks/:id', async (req, res) => {
-    try {
-        await prisma.task.delete({
-            where: {
-                id: req.params.id
-            },
-        });
-        res.json({ message: 'Task deletada com sucesso!' });
-    } catch (error) {
-        res.status(500).json({ error: "Erro ao deletar a tarefa" });
-    }
-});
+router.delete('/tasks/:id', taskController.deleteTask);
 
 module.exports = router;
