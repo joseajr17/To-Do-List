@@ -1,18 +1,24 @@
 const express = require('express');
 const { prisma } = require('./utils/prisma');
 const { UserController } = require('./controller/UserController');
+const { AuthController } = require('./controller/AuthController');
 const { TaskController } = require('./controller/TaskController');
 
 const router = express.Router();
 
 // Controllers
 const userController = new UserController;
+const authController = new AuthController;
 const taskController = new TaskController;
 
 // Rotas Users
 
 router.post('/users', userController.store);
 router.get('/users', userController.index);
+
+// Rotas Auth
+
+router.post('/auth', authController.authenticate);
 
 // Rotas Tasks
 

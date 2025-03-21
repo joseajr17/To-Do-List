@@ -22,14 +22,10 @@ class TaskController {
     async updateTask(req, res) {
         const { id } = req.params;
         
-        const task = await prisma.task.findUnique({
-            where: {
-                id
-            }
-        });
+        const task = await prisma.task.findUnique({ where: { id } });
 
         if (!task) {
-            return res.status(404).json({ error: "Tarefa não encontrada" });
+            return res.status(404).json({ error: "Task não encontrada" });
         }
 
         const updatedTask = await prisma.task.update({
