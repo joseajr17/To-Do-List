@@ -2,10 +2,21 @@ import { Link } from "react-router";
 import { useState } from "react";
 import { LayoutComponents } from "../LayoutComponents";
 
+import { api } from "../../services/api";
+
 export function RegisterForm() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    async function createUser(e) {
+        e.preventDefault();
+        const data = {
+            name, email, password,
+        };
+
+        await api.post('/users', data);
+    }
 
     return (
         <LayoutComponents title="Criar conta">
@@ -42,7 +53,8 @@ export function RegisterForm() {
                 </div>
 
                 <button
-                    type="submit"
+                    type="button"
+                    onClick={createUser}
                     className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disabled:opacity-50 cursor-pointer">
                     Cadastre-se
                 </button>
