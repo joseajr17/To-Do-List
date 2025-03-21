@@ -12,6 +12,7 @@ const taskController = new TaskController;
 // Rotas Users
 
 router.post('/users', userController.store);
+router.get('/users', userController.index);
 
 // Rotas Tasks
 
