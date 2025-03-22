@@ -7,16 +7,41 @@ export function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState("");
+    const [error, setError] = useState("");
+
     const { signIn, signed } = useContext(AuthContext);
 
     async function handleSignIn(e) {
         e.preventDefault();
 
-        const data = {
-            email, password,
-        };
+        setError("");
 
-        await signIn(data);
+        if (!email) {
+            setError("Preencha o e-mail.");
+            return;
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            setError("E-mail inválido.");
+            return;
+        } else if (!password) {
+            setError("Preencha a senha.");
+            return;
+        }
+
+        const data = { email, password };
+
+        try {
+            
+            if (await signIn(data)) {
+                setEmail("");
+                setPassword("");
+            } else {
+                setError("Credencias inválidas.");
+            }
+
+        } catch (signInError) {
+            console.error("Erro ao logar:", signInError);
+            setError("Credencias inválidas.");
+        }
     }
 
     if (signed) {
@@ -59,12 +84,15 @@ export function LoginForm() {
                     </div>
 
                     <button
-                        type="button"
+                        type="submit"
                         onClick={handleSignIn}
                         className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700 disabled:opacity-50 cursor-pointer">
                         Entrar
                     </button>
 
+                    <div className='flex text-center justify-center'>
+                        {error && <span className="text-red-500 text-sm rounded outline-2 outline-offset-4 bg-transparent pt-2">{error}</span>}
+                    </div>
                     <div className="text-center">
                         <span>Não possui conta? </span>
                         <Link
