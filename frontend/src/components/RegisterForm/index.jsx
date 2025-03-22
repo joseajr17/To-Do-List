@@ -61,7 +61,7 @@ export function RegisterForm() {
 
                 <div className="text-center">
                     <Link
-                        to="/login"
+                        to="/"
                         className="text-blue-500 hover:text-blue-500/50">
                         Já tem uma conta?
                     </Link>
