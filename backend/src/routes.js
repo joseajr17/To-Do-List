@@ -24,15 +24,15 @@ router.post('/auth', authController.authenticate);
 // Rotas Tasks
 
 // Criar Task
-router.post('/tasks', taskController.createTask);
+router.post('/tasks', AuthMiddlewares, taskController.createTask);
 
 // Listar tasks
-router.get('/tasks', taskController.getTasks);
+router.get('/tasks', AuthMiddlewares, taskController.getTasks);
 
 // Atualizar o estado da tarefa
-router.patch('/tasks/:id', taskController.updateTask);
+router.patch('/tasks/:id', AuthMiddlewares, taskController.updateTask);
 
 // Deletar Task
-router.delete('/tasks/:id', taskController.deleteTask);
+router.delete('/tasks/:id', AuthMiddlewares, taskController.deleteTask);
 
 module.exports = router;

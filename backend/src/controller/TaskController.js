@@ -4,24 +4,37 @@ class TaskController {
     // Criar Task
     async createTask(req, res) {
         const { text } = req.body;
+        const userId = req.userId;
 
         const task = await prisma.task.create({
-            data: { text },
+            data: {
+                text,
+                PkUserId: userId,
+            },
         });
-        
+
         res.status(201).json(task);
     }
 
     // Listar Tasks
     async getTasks(req, res) {
-        const tasks = await prisma.task.findMany();
-        res.status(200).json(tasks);
+        const userId = req.userId;
+
+        try {
+            const tasks = await prisma.task.findMany({
+                where: { PkUserId: userId },
+            });
+            res.status(200).json(tasks);
+        } catch (error) {
+            console.error("Erro ao buscar tarefas:", error);
+            res.status(500).json({ error: "Erro ao buscar tarefas." });
+        }
     }
 
     // Atualizar o estado da tarefa
     async updateTask(req, res) {
         const { id } = req.params;
-        
+
         const task = await prisma.task.findUnique({ where: { id } });
 
         if (!task) {

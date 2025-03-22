@@ -1,8 +1,11 @@
+import { Header } from "../Header";
+import { TaskList } from "../TaskList";
 
 export function Home() {
     return (
         <div>
-            <h1>Home</h1>
+            <Header />
+            <TaskList />
         </div>
     );
 }

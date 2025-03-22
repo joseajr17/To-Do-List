@@ -5,7 +5,6 @@ import { AuthProvider } from './context/auth';
 import { AppRouter } from './routes';
 
 function App() {
-//   console.log("AuthProviderRRRR: " + AuthProvider);
   return (
     <div className='flex flex-col dark:bg-gray-800 font-mono text-white min-h-screen min-w-screen'>
       <AuthProvider>

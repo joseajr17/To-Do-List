@@ -15,6 +15,7 @@ function AuthMiddlewares(req, res, next) {
         const { id } = decoded;
 
         req.userId = id;
+        
         next();
 
     } catch (error) {

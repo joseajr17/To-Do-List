@@ -11,7 +11,7 @@ export function AppRouter() {
                 <Route path="/" element={<LoginForm />} />
                 <Route path="/register" element={<RegisterForm />} />
                 <Route path="/home" element={<PrivateRoutes />} >
-                    <Route path="/home" element={<Home />} />
+                    <Route index element={<Home />} />
                 </Route>
             </Routes>
         </Router>

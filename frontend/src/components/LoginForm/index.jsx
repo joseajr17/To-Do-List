@@ -30,13 +30,11 @@ export function LoginForm() {
         const data = { email, password };
 
         try {
+            await signIn(data)
             
-            if (await signIn(data)) {
-                setEmail("");
-                setPassword("");
-            } else {
-                setError("Credencias inválidas.");
-            }
+            setEmail("");
+            setPassword("");
+
 
         } catch (signInError) {
             console.error("Erro ao logar:", signInError);
