@@ -3,7 +3,7 @@ import { TaskList } from "../TaskList";
 
 export function Home() {
     return (
-        <div>
+        <div >
             <Header />
             <TaskList />
         </div>

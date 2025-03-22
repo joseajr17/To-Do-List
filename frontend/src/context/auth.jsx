@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
+import { Navigate } from "react-router";
 
 export const AuthContext = createContext();
 
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }) => {
         const storageToken = localStorage.getItem("@Auth:token");
 
         if (storageUser && storageToken) {
-            setUser(storageUser);
+            setUser(JSON.parse(storageUser));
         }
     }
 
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }) => {
                 ] = `Bearer ${response.data.token}`;
 
                 localStorage.setItem("@Auth:user", JSON.stringify(response.data.user));
+
                 localStorage.setItem("@Auth:token", response.data.token);
                 
             }
@@ -42,12 +44,21 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    function logout() {
+        setUser(null); 
+        localStorage.removeItem("@Auth:user"); 
+        localStorage.removeItem("@Auth:token"); 
+        delete api.defaults.headers.common["Authorization"];
+        return <Navigate to="/" />
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 user,
                 signed: !!user,
                 signIn,
+                logout,
             }}
         >
             {children}

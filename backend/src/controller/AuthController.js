@@ -22,9 +22,9 @@ class AuthController {
 
             const token = sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
-            const { id } = user;
+            const { id, name } = user;
 
-            res.json({ user: { id, email }, token });
+            res.json({ user: { id, email, name }, token });
         } catch (error) {
             console.error("Erro durante a autenticação:", error);
             res.status(500).json({ error: "Erro interno do servidor." });

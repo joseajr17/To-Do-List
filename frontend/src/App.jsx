@@ -6,13 +6,10 @@ import { AppRouter } from './routes';
 
 function App() {
   return (
-    <div className='flex flex-col dark:bg-gray-800 font-mono text-white min-h-screen min-w-screen'>
+    <div className='flex flex-col bg-gray-800 font-mono text-white min-h-screen min-w-screen'>
       <AuthProvider>
         <AppRouter />
       </AuthProvider>
-
-      {/* <Header />
-      <TaskList /> */}
     </div>
   )
 }
